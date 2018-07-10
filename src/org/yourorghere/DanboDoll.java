@@ -104,9 +104,11 @@ gl.glTranslatef(1.0f, 0.5f, 3.0f);
 Objek.badan(gl);
 gl.glPopMatrix();
 gl.glTranslatef(-0.2f, 0.5f, 3.3f);
+gl.glRotatef(angle, 1.0f, 0.0f, 0.0f);
 Objek.tangankanan(gl);
 gl.glPopMatrix();
 gl.glTranslatef(4.1f, 0.5f, 3.3f);
+gl.glRotatef(angle, 1.0f, 0.0f, 0.0f);
 Objek.tangankiri(gl);
 gl.glPopMatrix();
 gl.glTranslatef(1.3f, 0.5f, 7.0f);
@@ -117,6 +119,7 @@ Objek.kakikiri(gl);
 gl.glPopMatrix();
 
 
+angle += 0.2f;
 }
 public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
 }
