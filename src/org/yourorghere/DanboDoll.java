@@ -192,7 +192,7 @@ public class DanboDoll extends JFrame {
                     Logger.getLogger(getClass().getName()).log(Level.INFO, "can not enable system look and feel", ex);
                 }
 
-               DanboDoll frame = new DanboDoll();
+                DanboDoll frame = new DanboDoll();
                 frame.setVisible(true);
             }
         });

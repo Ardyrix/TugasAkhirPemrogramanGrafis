@@ -211,7 +211,12 @@ public class GLRenderer implements GLEventListener {
             silinderAngle -= 15f;
         }
         if (silinder3) {
-            silinderAngleY -= 15f;
+            silinderAngleY -= direction3;
+            if (silinderAngleY < -50) {
+            direction3 = -direction3;
+        } else if (silinderAngleY > 50) {
+            direction3 = -direction3;
+        }
         }
 
         if (silinder4) {
@@ -221,8 +226,12 @@ public class GLRenderer implements GLEventListener {
             silinderAngleZ -= 15f;
         }
         if (silinder6) {
-            silinderAngleZ -= 15f;
-           
+            silinderAngleZ -= direction4;
+            if (silinderAngleZ < -50) {
+            direction4 = -direction3;
+        } else if (silinderAngleZ > 50) {
+            direction4 = -direction4;
+        }
         }
         if (kamera) {
             Key_Pressed(74);
