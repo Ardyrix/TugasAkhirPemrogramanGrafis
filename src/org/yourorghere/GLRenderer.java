@@ -6,11 +6,8 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 /**
- * GLRenderer.java <BR>
- * author: Brian Paul (converted to Java by Ron Cemer and Sven Goethel)
- * <P>
  *
- * This version is equal to Brian Paul's version 1.2 1999/10/21
+ * @author BOT
  */
 public class GLRenderer implements GLEventListener {
 
@@ -35,7 +32,6 @@ public class GLRenderer implements GLEventListener {
             float dot_product = (x * temp.x) + (y * temp.y) + (z * temp.z);
             float cross_product_x = (y * temp.z) - (temp.z * z);
             float cross_product_y = -((x * temp.z) - (z * temp.x));
-
             float cross_product_z = (x * temp.y) - (y * temp.x);
             float last_factor_rodrigues = (float) (1 - Math.cos(Math.toRadians(angle % 90)));
             x = (float) ((x * Math.cos(Math.toRadians(angle % 90)))
@@ -49,9 +45,9 @@ public class GLRenderer implements GLEventListener {
                     + (dot_product * last_factor_rodrigues * z));
         }
     }
-    vector depanBelakang = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
-    vector samping = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector vertikal = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
+    vector depanBelakang = new vector(0f, 0f, -1f);
+    vector samping = new vector(1f, 0f, 0f);
+    vector vertikal = new vector(0f, 1f, 0f);
     float Cx = 0, Cy = 2.5f, Cz = 0;
     float Lx = 0, Ly = 2.5f, Lz = -20f;
     float angle_depanBelakang = 0f;
@@ -60,17 +56,17 @@ public class GLRenderer implements GLEventListener {
     float angle_samping2 = 0f;
     float angle_vertikal = 0f;
     float angle_vertikal2 = 0f;
-    float silinderAngle = 90f;
-    float silinderAngleY = 0f;
-    float silinderAngleZ = 0f;
-    boolean ori = true, silinder1, silinder2, silinder3, silinder4, silinder5, silinder6 = false,
-            kamera, kamera1, kamera2, kamera3, kamera4, kamera5 = false;
+    float danboAngle = 90f;
+    float kakikananAngle = 0f;
+    float kakikiriAngle = 0f;
+    float tangankananAngle = 1;
+    float tangankiriAngle = 1;
+    double direction1 = 5;
+    double direction2 = 5;
+    double direction3 = 5;
+    double direction4 = 5;
+    boolean ori = true, kakiKanan1, kakiKanan2, kakiKiri1, kakiKiri2 = false;
 
-    /*
-     ini adalah metod untuk melakukan pergerakan.
-     magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
-     gunakan -1 untuk arah berlawanan dengan vektor awal
-     */
     private void vectorMovement(vector toMove, float magnitude, float direction) {
         float speedX = toMove.x * magnitude * direction;
         float speedY = toMove.y * magnitude * direction;
@@ -84,10 +80,10 @@ public class GLRenderer implements GLEventListener {
     }
 
     private void cameraRotation(vector reference, double angle) {
-        float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));//magnitud
-        float Up_x1 = reference.x / M; //melakukan
-        float Up_y1 = reference.y / M; //normalisasi
-        float Up_z1 = reference.z / M; //vektor patokan
+        float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));
+        float Up_x1 = reference.x / M;
+        float Up_y1 = reference.y / M;
+        float Up_z1 = reference.z / M;
         float VLx = Lx - Cx;
         float VLy = Ly - Cy;
         float VLz = Lz - Cz;
@@ -111,13 +107,12 @@ public class GLRenderer implements GLEventListener {
     }
 
     public void init(GLAutoDrawable drawable) {
-// Use debug pipeline
-// drawable.setGL(new DebugGL(drawable.getGL()));
+
         GL gl = drawable.getGL();
         System.err.println("INIT GL IS: " + gl.getClass().getName());
-// Enable VSync
+
         gl.setSwapInterval(1);
-        float ambient[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        float ambient[] = {0f, 26, 81f, 55f};
         float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
         float position[] = {1.0f, 1.0f, 1.0f, 0.0f};
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient, 0);
@@ -126,16 +121,16 @@ public class GLRenderer implements GLEventListener {
         gl.glEnable(GL.GL_LIGHT0);
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_DEPTH_TEST);
-        gl.glClearColor(0f, 0f, 1.0f, 1.0f);
+        gl.glClearColor(0f, 0f, 0.0f, 1.0f);
         gl.glShadeModel(GL.GL_SMOOTH);
-//gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
+
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
 
-        if (height <= 0) { // avoid a divide by zero error!
+        if (height <= 0) {
             height = 1;
         }
         final float h = (float) width / (float) height;
@@ -146,26 +141,22 @@ public class GLRenderer implements GLEventListener {
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
-    float angle1 = 1;
-    float angle2 = 1;
-    double direction = 5;
-    double direction2 = 5;
-    double direction3 = 5;
-    double direction4 = 5;
 
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
-// Clear the drawing area
+
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-// Reset the current matrix to the "identity"
+
         gl.glLoadIdentity();
-// Move the "drawing cursor" around
+
         glu.gluLookAt(Cx, Cy, Cz,
                 Lx, Ly, Lz,
                 vertikal.x, vertikal.y, vertikal.z);
-        gl.glRotatef(silinderAngle, 1.0f, 0.0f, 0.0f);
+
+        gl.glRotatef(danboAngle, 1.0f, 0.0f, 0.0f);
         gl.glTranslatef(-2.5f, -16.0f, -7.0f);
+        gl.glColor3f(1, 0, 0);
         Objek.kepala(gl);
         gl.glPushMatrix();
         gl.glPushMatrix();
@@ -175,81 +166,66 @@ public class GLRenderer implements GLEventListener {
         Objek.badan(gl);
         gl.glPopMatrix();
         gl.glTranslatef(-0.2f, 0.5f, 3.3f);
-        gl.glRotatef(angle1, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(tangankananAngle, 1.0f, 0.0f, 0.0f);
         Objek.tangankanan(gl);
         gl.glPopMatrix();
         gl.glTranslatef(4.1f, 0.5f, 3.3f);
-        gl.glRotatef(angle2, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(tangankiriAngle, 1.0f, 0.0f, 0.0f);
         Objek.tangankiri(gl);
         gl.glPopMatrix();
         gl.glTranslatef(1.3f, 0.5f, 7.0f);
-        gl.glRotatef(silinderAngleY, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(kakikananAngle, 1.0f, 0.0f, 0.0f);
         Objek.kakikanan(gl);
         gl.glPopMatrix();
         gl.glTranslatef(2.8f, 0.5f, 7.0f);
-        gl.glRotatef(silinderAngleZ, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(kakikiriAngle, 1.0f, 0.0f, 0.0f);
+        gl.glColor3f(1, 0, 0);
         Objek.kakikiri(gl);
         gl.glPopMatrix();
 
-        angle1 += direction;
-        if (angle1 > 50) {
-            direction = -direction;
-        } else if (angle1 < -50) {
-            direction = -direction;
+        tangankananAngle += direction1;
+        if (tangankananAngle > 50) {
+            direction1 = -direction1;
+        } else if (tangankananAngle < -50) {
+            direction1 = -direction1;
         }
-//angle += 0.0f;
-        angle2 -= direction2;
-        if (angle2 < -50) {
+        tangankiriAngle -= direction2;
+        if (tangankiriAngle < -50) {
             direction2 = -direction2;
-        } else if (angle2 > 50) {
+        } else if (tangankiriAngle > 50) {
             direction2 = -direction2;
         }
-        if (silinder1) {
-            silinderAngle += 15f;
+        if (kakiKanan1) {
+            kakikananAngle -= direction3;
+            if (kakikananAngle < -70) {
+                direction3 = -direction3;
+            } else if (kakikananAngle > 10) {
+                direction3 = -direction3;
+            }
         }
-        if (silinder2) {
-            silinderAngle -= 15f;
+        if (kakiKanan2) {
+            kakikananAngle += direction3;
+            if (kakikananAngle < -70) {
+                direction3 = -direction3;
+            } else if (kakikananAngle > 10) {
+                direction3 = -direction3;
+            }
         }
-        if (silinder3) {
-            silinderAngleY -= direction3;
-            if (silinderAngleY < -50) {
-            direction3 = -direction3;
-        } else if (silinderAngleY > 50) {
-            direction3 = -direction3;
+        if (kakiKiri1) {
+            kakikiriAngle += direction4;
+            if (kakikiriAngle < -70) {
+                direction4 = -direction4;
+            } else if (kakikiriAngle > 10) {
+                direction4 = -direction4;
+            }
         }
-        }
-
-        if (silinder4) {
-            silinderAngleY -= 15f;
-        }
-        if (silinder5) {
-            silinderAngleZ -= 15f;
-        }
-        if (silinder6) {
-            silinderAngleZ -= direction4;
-            if (silinderAngleZ < -50) {
-            direction4 = -direction3;
-        } else if (silinderAngleZ > 50) {
-            direction4 = -direction4;
-        }
-        }
-        if (kamera) {
-            Key_Pressed(74);
-        }
-        if (kamera1) {
-            Key_Pressed(76);
-        }
-        if (kamera2) {
-            Key_Pressed(73);
-        }
-        if (kamera3) {
-            Key_Pressed(75);
-        }
-        if (kamera4) {
-            Key_Pressed(39);
-        }
-        if (kamera5) {
-            Key_Pressed(37);
+        if (kakiKiri2) {
+            kakikiriAngle -= direction4;
+            if (kakikiriAngle < -70) {
+                direction4 = -direction4;
+            } else if (kakikiriAngle > 10) {
+                direction4 = -direction4;
+            }
         }
         gl.glFlush();
 
@@ -259,144 +235,89 @@ public class GLRenderer implements GLEventListener {
     }
 
     void Key_Pressed(int keyCode) {
-//huruf W
-        if (keyCode == 72) {
+        //panah ATAS
+        if (keyCode == 38) {
             vectorMovement(depanBelakang, 2f, 1f);
-        } //huruf S
-        else if (keyCode == 70) {
+        } //panah BAWAH
+        else if (keyCode == 40) {
             vectorMovement(depanBelakang, 2f, -1f);
-        } //huruf A
-        else if (keyCode == 71) {
-            vectorMovement(samping, 2f, 1f);
         } //huruf D
         else if (keyCode == 68) {
             vectorMovement(samping, 2f, -1f);
-        } //panah atas
-        else if (keyCode == 38) {
-            vectorMovement(vertikal, 2f, 1f);
-        } //panah bawah
-        else if (keyCode == 39) {
-            vectorMovement(vertikal, 2f, -1f);
-        } //tombol spasi X+
+        } //huruf A
         else if (keyCode == 65) {
-            if (silinder1) {
-                silinder1 = false;
+            vectorMovement(samping, 2f, 1f);
+        } //huruf S
+        else if (keyCode == 83) {
+            vectorMovement(vertikal, 2f, 1f);
+        } //huruf W
+        else if (keyCode == 87) {
+            vectorMovement(vertikal, 2f, -1f);
+        } //huruf Z
+        else if (keyCode == 90) {
+            if (kakiKanan1) {
+                kakiKanan1 = false;
             } else {
-                silinder1 = true;
+                kakiKanan1 = true;
             }
-        } //tombol animasi X- (A)
-        else if (keyCode == 53) {
-            if (silinder2) {
-                silinder2 = false;
+        } //huruf X
+        else if (keyCode == 88) {
+            if (kakiKanan2) {
+                kakiKanan2 = false;
             } else {
-                silinder2 = true;
+                kakiKanan2 = true;
             }
-        } //tombol animasi Z+ (U)karna sudah dirotasi awalnya
+        } //huruf V
+        else if (keyCode == 86) {
+            if (kakiKiri1) {
+                kakiKiri1 = false;
+            } else {
+                kakiKiri1 = true;
+            }
+        } //huruf C
         else if (keyCode == 67) {
-            if (silinder3) {
-                silinder3 = false;
+            if (kakiKiri2) {
+                kakiKiri2 = false;
             } else {
-                silinder3 = true;
+                kakiKiri2 = true;
             }
-        } //tombol animasi Z- 
-        else if (keyCode == 49) {
-            if (silinder4) {
-                silinder4 = false;
-            } else {
-                silinder4 = true;
-            }
-        } //tombol animasi Y- (v) karna sudah dirotasi awalnya
-        else if (keyCode == 51) {
-            if (silinder5) {
-                silinder5 = false;
-            } else {
-                silinder5 = true;
-            }
-        } //tombol animasi Y+ (N) karna sudah dirotasi awalnya
-        else if (keyCode == 66) {
-            if (silinder6) {
-                silinder6 = false;
-            } else {
-                silinder6 = true;
-            }
-        }//enter
-        else if (keyCode == 10) {
-            if (kamera) {
-                kamera = false;
-            } else {
-                kamera = true;
-            }
-        } else if (keyCode == 81) {
-            if (kamera1) {
-                kamera1 = false;
-            } else {
-                kamera1 = true;
-            }
-        } else if (keyCode == 87) {
-            if (kamera2) {
-                kamera2 = false;
-            } else {
-                kamera2 = true;
-            }
-        } else if (keyCode == 69) {
-            if (kamera3) {
-                kamera3 = false;
-            } else {
-                kamera3 = true;
-            }
-        } else if (keyCode == 82) {
-            if (kamera4) {
-                kamera4 = false;
-            } else {
-                kamera4 = true;
-            }
-        } else if (keyCode == 84) {
-            if (kamera5) {
-                kamera5 = false;
-            } else {
-                kamera5 = true;
-            }
-        } //huruf J
+        }//huruf J
         else if (keyCode == 74) {
-            angle_vertikal += 15f;
+            angle_vertikal += 7f;
             samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
             depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
             cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
             angle_vertikal2 = angle_vertikal;
         } //huruf L
         else if (keyCode == 76) {
-            angle_vertikal -= 15f;
+            angle_vertikal -= 7f;
             samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
             depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
             cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
             angle_vertikal2 = angle_vertikal;
-        } //huruf I
-        else if (keyCode == 73) {
-            angle_samping -= 15f;
-//vertikal.vectorRotation(samping, angle_samping-angle_samping2);
-            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-            cameraRotation(samping, angle_samping - angle_samping2);
-            angle_samping2 = angle_samping;
         } //huruf K
         else if (keyCode == 75) {
-            angle_samping += 15f;
-//vertikal.vectorRotation(samping, angle_samping-angle_samping2);
+            angle_samping -= 7f;
             depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
             cameraRotation(samping, angle_samping - angle_samping2);
             angle_samping2 = angle_samping;
-        } //panah kanan
-        else if (keyCode == 39) {
+        } //huruf I
+        else if (keyCode == 73) {
+            angle_samping += 7f;
+            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
+            cameraRotation(samping, angle_samping - angle_samping2);
+            angle_samping2 = angle_samping;
+        } //panah KANAN
+        else if (keyCode == 37) {
             angle_depanBelakang -= 15f;
             samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
             vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-//cameraRotation(vertikal, angle_samping-angle_samping2);
             angle_depanBelakang2 = angle_depanBelakang;
-        } //panah kiri
-        else if (keyCode == 37) {
+        } //panah KIRI
+        else if (keyCode == 39) {
             angle_depanBelakang += 15f;
             samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
             vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-//cameraRotation(vertikal, angle_samping-angle_samping2);
             angle_depanBelakang2 = angle_depanBelakang;
         }
     }
