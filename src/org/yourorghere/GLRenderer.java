@@ -147,9 +147,11 @@ public class GLRenderer implements GLEventListener {
         gl.glLoadIdentity();
     }
     float angle1 = 1;
-float angle2 = 1;
-double direction = 5;
-double direction2 = 5;
+    float angle2 = 1;
+    double direction = 5;
+    double direction2 = 5;
+    double direction3 = 5;
+    double direction4 = 5;
 
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
@@ -163,7 +165,7 @@ double direction2 = 5;
                 Lx, Ly, Lz,
                 vertikal.x, vertikal.y, vertikal.z);
         gl.glRotatef(silinderAngle, 1.0f, 0.0f, 0.0f);
-
+        gl.glTranslatef(-2.5f, -16.0f, -7.0f);
         Objek.kepala(gl);
         gl.glPushMatrix();
         gl.glPushMatrix();
@@ -189,19 +191,19 @@ double direction2 = 5;
         Objek.kakikiri(gl);
         gl.glPopMatrix();
 
-       angle1 +=direction;
-if(angle1>50){
-    direction=-direction;
-}else if(angle1<-50){
-    direction=-direction;
-}
+        angle1 += direction;
+        if (angle1 > 50) {
+            direction = -direction;
+        } else if (angle1 < -50) {
+            direction = -direction;
+        }
 //angle += 0.0f;
-angle2 -=direction2;
-if(angle2<-50){
-    direction2=-direction2;
-}else if(angle2>50){
-    direction2=-direction2;
-}
+        angle2 -= direction2;
+        if (angle2 < -50) {
+            direction2 = -direction2;
+        } else if (angle2 > 50) {
+            direction2 = -direction2;
+        }
         if (silinder1) {
             silinderAngle += 15f;
         }
@@ -211,6 +213,7 @@ if(angle2<-50){
         if (silinder3) {
             silinderAngleY -= 15f;
         }
+
         if (silinder4) {
             silinderAngleY -= 15f;
         }
@@ -219,6 +222,7 @@ if(angle2<-50){
         }
         if (silinder6) {
             silinderAngleZ -= 15f;
+           
         }
         if (kamera) {
             Key_Pressed(74);
@@ -239,7 +243,7 @@ if(angle2<-50){
             Key_Pressed(37);
         }
         gl.glFlush();
-        
+
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
