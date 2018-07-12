@@ -235,61 +235,61 @@ public class GLRenderer implements GLEventListener {
     }
 
     void Key_Pressed(int keyCode) {
-        //panah ATAS
+        
         switch (keyCode) {
-        //panah BAWAH
+        //panah ATAS
             case 38:
                 vectorMovement(depanBelakang, 2f, 1f);
                 break;
-        //huruf D
+        //panah BAWAH
             case 40:
                 vectorMovement(depanBelakang, 2f, -1f);
                 break;
-        //huruf A
+        //huruf D
             case 68:
                 vectorMovement(samping, 2f, -1f);
                 break;
-        //huruf S
+        //huruf A
             case 65:
                 vectorMovement(samping, 2f, 1f);
                 break;
-        //huruf W
+        //huruf S
             case 83:
                 vectorMovement(vertikal, 2f, 1f);
                 break;
-        //huruf Z
+        //huruf X
             case 87:
                 vectorMovement(vertikal, 2f, -1f);
                 break;
-        //huruf X
+        //huruf Z
             case 90:
                 if (kakiKanan1) {
                     kakiKanan1 = false;
                 } else {
                     kakiKanan1 = true;
                 }   break;
-        //huruf V
+        //huruf Y
             case 88:
                 if (kakiKanan2) {
                     kakiKanan2 = false;
                 } else {
                     kakiKanan2 = true;
                 }   break;
-        //huruf C
+        //huruf V
             case 86:
                 if (kakiKiri1) {
                     kakiKiri1 = false;
                 } else {
                     kakiKiri1 = true;
                 }   break;
-        //huruf J
+        //huruf C
             case 67:
                 if (kakiKiri2) {
                     kakiKiri2 = false;
                 } else {
                     kakiKiri2 = true;
                 }   break;
-        //huruf L
+        //Huruf J
             case 74:
                 angle_vertikal += 7f;
                 samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
@@ -297,7 +297,7 @@ public class GLRenderer implements GLEventListener {
                 cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
                 angle_vertikal2 = angle_vertikal;
                 break;
-        //huruf K
+        //huruf L
             case 76:
                 angle_vertikal -= 7f;
                 samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
@@ -305,14 +305,14 @@ public class GLRenderer implements GLEventListener {
                 cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
                 angle_vertikal2 = angle_vertikal;
                 break;
-        //huruf I
+        //huruf K
             case 75:
                 angle_samping -= 7f;
                 depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
                 cameraRotation(samping, angle_samping - angle_samping2);
                 angle_samping2 = angle_samping;
                 break;
-        //panah KANAN
+        //Huruf I
             case 73:
                 angle_samping += 7f;
                 depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
@@ -326,6 +326,7 @@ public class GLRenderer implements GLEventListener {
                 vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
                 angle_depanBelakang2 = angle_depanBelakang;
                 break;
+        //panah KANAN    
             case 39:
                 angle_depanBelakang += 15f;
                 samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
