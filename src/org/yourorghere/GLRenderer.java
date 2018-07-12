@@ -236,89 +236,104 @@ public class GLRenderer implements GLEventListener {
 
     void Key_Pressed(int keyCode) {
         //panah ATAS
-        if (keyCode == 38) {
-            vectorMovement(depanBelakang, 2f, 1f);
-        } //panah BAWAH
-        else if (keyCode == 40) {
-            vectorMovement(depanBelakang, 2f, -1f);
-        } //huruf D
-        else if (keyCode == 68) {
-            vectorMovement(samping, 2f, -1f);
-        } //huruf A
-        else if (keyCode == 65) {
-            vectorMovement(samping, 2f, 1f);
-        } //huruf S
-        else if (keyCode == 83) {
-            vectorMovement(vertikal, 2f, 1f);
-        } //huruf W
-        else if (keyCode == 87) {
-            vectorMovement(vertikal, 2f, -1f);
-        } //huruf Z
-        else if (keyCode == 90) {
-            if (kakiKanan1) {
-                kakiKanan1 = false;
-            } else {
-                kakiKanan1 = true;
-            }
-        } //huruf X
-        else if (keyCode == 88) {
-            if (kakiKanan2) {
-                kakiKanan2 = false;
-            } else {
-                kakiKanan2 = true;
-            }
-        } //huruf V
-        else if (keyCode == 86) {
-            if (kakiKiri1) {
-                kakiKiri1 = false;
-            } else {
-                kakiKiri1 = true;
-            }
-        } //huruf C
-        else if (keyCode == 67) {
-            if (kakiKiri2) {
-                kakiKiri2 = false;
-            } else {
-                kakiKiri2 = true;
-            }
-        }//huruf J
-        else if (keyCode == 74) {
-            angle_vertikal += 7f;
-            samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-            angle_vertikal2 = angle_vertikal;
-        } //huruf L
-        else if (keyCode == 76) {
-            angle_vertikal -= 7f;
-            samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-            angle_vertikal2 = angle_vertikal;
-        } //huruf K
-        else if (keyCode == 75) {
-            angle_samping -= 7f;
-            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-            cameraRotation(samping, angle_samping - angle_samping2);
-            angle_samping2 = angle_samping;
-        } //huruf I
-        else if (keyCode == 73) {
-            angle_samping += 7f;
-            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-            cameraRotation(samping, angle_samping - angle_samping2);
-            angle_samping2 = angle_samping;
-        } //panah KANAN
-        else if (keyCode == 37) {
-            angle_depanBelakang -= 15f;
-            samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-            vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-            angle_depanBelakang2 = angle_depanBelakang;
-        } //panah KIRI
-        else if (keyCode == 39) {
-            angle_depanBelakang += 15f;
-            samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-            vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-            angle_depanBelakang2 = angle_depanBelakang;
+        switch (keyCode) {
+        //panah BAWAH
+            case 38:
+                vectorMovement(depanBelakang, 2f, 1f);
+                break;
+        //huruf D
+            case 40:
+                vectorMovement(depanBelakang, 2f, -1f);
+                break;
+        //huruf A
+            case 68:
+                vectorMovement(samping, 2f, -1f);
+                break;
+        //huruf S
+            case 65:
+                vectorMovement(samping, 2f, 1f);
+                break;
+        //huruf W
+            case 83:
+                vectorMovement(vertikal, 2f, 1f);
+                break;
+        //huruf Z
+            case 87:
+                vectorMovement(vertikal, 2f, -1f);
+                break;
+        //huruf X
+            case 90:
+                if (kakiKanan1) {
+                    kakiKanan1 = false;
+                } else {
+                    kakiKanan1 = true;
+                }   break;
+        //huruf V
+            case 88:
+                if (kakiKanan2) {
+                    kakiKanan2 = false;
+                } else {
+                    kakiKanan2 = true;
+                }   break;
+        //huruf C
+            case 86:
+                if (kakiKiri1) {
+                    kakiKiri1 = false;
+                } else {
+                    kakiKiri1 = true;
+                }   break;
+        //huruf J
+            case 67:
+                if (kakiKiri2) {
+                    kakiKiri2 = false;
+                } else {
+                    kakiKiri2 = true;
+                }   break;
+        //huruf L
+            case 74:
+                angle_vertikal += 7f;
+                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
+                angle_vertikal2 = angle_vertikal;
+                break;
+        //huruf K
+            case 76:
+                angle_vertikal -= 7f;
+                samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
+                cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
+                angle_vertikal2 = angle_vertikal;
+                break;
+        //huruf I
+            case 75:
+                angle_samping -= 7f;
+                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
+                cameraRotation(samping, angle_samping - angle_samping2);
+                angle_samping2 = angle_samping;
+                break;
+        //panah KANAN
+            case 73:
+                angle_samping += 7f;
+                depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
+                cameraRotation(samping, angle_samping - angle_samping2);
+                angle_samping2 = angle_samping;
+                break;
+        //panah KIRI
+            case 37:
+                angle_depanBelakang -= 15f;
+                samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                angle_depanBelakang2 = angle_depanBelakang;
+                break;
+            case 39:
+                angle_depanBelakang += 15f;
+                samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
+                angle_depanBelakang2 = angle_depanBelakang;
+                break;
+            default:
+                break;
         }
     }
 }
