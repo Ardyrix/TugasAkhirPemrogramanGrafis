@@ -257,7 +257,7 @@ public class GLRenderer implements GLEventListener {
             case 83:
                 vectorMovement(vertikal, 2f, 1f);
                 break;
-        //huruf X
+        //huruf W
             case 87:
                 vectorMovement(vertikal, 2f, -1f);
                 break;
@@ -268,7 +268,7 @@ public class GLRenderer implements GLEventListener {
                 } else {
                     kakiKanan1 = true;
                 }   break;
-        //huruf Y
+        //huruf X
             case 88:
                 if (kakiKanan2) {
                     kakiKanan2 = false;

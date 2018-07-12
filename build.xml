@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- You may freely edit this file. See commented blocks below for -->
 <!-- some examples of how to customize the build. -->
-<project name="DanboDoll" default="default" basedir=".">
-    <description>Builds, tests, and runs the project DanboDoll.</description>
+<project name="Danbo1" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Danbo1.</description>
     <import file="nbproject/build-impl.xml"/>
     <import file="nbproject/build-jogl-template-impl.xml"/>
     <!--
